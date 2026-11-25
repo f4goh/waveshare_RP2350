@@ -1,6 +1,6 @@
 # Émulateurs 8 bits sur Waveshare RP2350
 
-Ce dépôt regroupe mes développements ainsi qu'une sélection de projets compatibles permettant d'émuler des ordinateurs et consoles 8 bits sur la carte **Waveshare RP2350-PiZero** (microcontrôleur Raspberry Pi RP2350B).
+Ce dépôt regroupe mes développements ainsi qu'une sélection de projets compatibles permettant d'émuler des ordinateurs et consoles 8 bits sur la carte **Waveshare RP2350-PiZero** (microcontrôleur Raspberry Pi RP2350B). **Cette carte a été choisie avant tout pour sa capacité à véhiculer directement la vidéo et le son en HDMI**, offrant ainsi une solution compacte et tout-en-un pour le rétrogaming.
 
 ---
 
@@ -9,27 +9,26 @@ Ce dépôt regroupe mes développements ainsi qu'une sélection de projets compa
 | Dossier | Description |
 | :--- | :--- |
 | **[`RP2350_Brief`](./RP2350_Brief)** | Documentation, schémas de câblage et présentation technique de la carte Waveshare RP2350. |
-| **[`commodore64`](./commodore64)** | Fichiers sources, firmwares et ressources pour l'émulation du **Commodore 64**. |
 | **[`oric-atmos`](./oric-atmos)** | Fichiers sources, firmwares et ressources pour l'émulation de l'**Oric Atmos**. |
-| **[`images`](./images)** | Captures d'écran et photos des réalisations matérielles. |
+| **[`commodore64`](./commodore64)** | Fichiers sources, firmwares et ressources pour l'émulation du **Commodore 64**. |
 
 ---
 
 ## 🖥️ Projets d'émulation (Dépôt local)
 
-### 1. Commodore 64
-Émulation du célèbre micro-ordinateur 8 bits de Commodore sur plateforme RP2350.
-* Accéder au dossier : [`/commodore64`](./commodore64)
-
-![Émulateur Commodore 64 sur Waveshare RP2350](images/c64.png)
-
----
-
-### 2. Oric Atmos
+### 1. Oric Atmos
 Émulation de l'Oric Atmos (processeur 6502) avec gestion de l'affichage et des périphériques.
 * Accéder au dossier : [`/oric-atmos`](./oric-atmos)
 
 ![Émulateur Oric Atmos sur Waveshare RP2350](images/oric.png)
+
+---
+
+### 2. Commodore 64
+Émulation du célèbre micro-ordinateur 8 bits de Commodore sur plateforme RP2350.
+* Accéder au dossier : [`/commodore64`](./commodore64)
+
+![Émulateur Commodore 64 sur Waveshare RP2350](images/c64.png)
 
 ---
 
@@ -73,6 +72,4 @@ Ce dépôt recense également d'autres émulateurs majeurs compatibles avec la c
 
 ---
 
-## 👤 Auteur
-* **Anthony (F4GOH)** – [GitHub @f4goh](https://github.com)
 
