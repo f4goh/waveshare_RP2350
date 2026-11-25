@@ -10,9 +10,9 @@ Ce dépôt regroupe mes développements ainsi qu'une sélection de projets compa
 * **[`oric-atmos`](./oric-atmos)** : Fichiers sources, firmwares et ressources pour l'émulation de l'**Oric Atmos**.
 * **[`commodore64`](./commodore64)** : Fichiers sources, firmwares et ressources pour l'émulation du **Commodore 64**.
 * **[`apple2e`](./apple2e)** : Fichiers sources, firmwares et ressources pour l'émulation de l'**Apple IIe**.
+* **[`scumm`](./scumm)** : Fichiers sources, firmwares et ressources pour l'émulation **ScummVM** ([voir `scumm/readme.md`](./scumm/readme.md)).
 * **[`pico-speccy`](./pico-speccy)** : Guide complet, raccourcis clavier et configuration Wi-Fi ESP-01S pour le **ZX Spectrum** ([voir `pico-speccy/readme.md`](./pico-speccy/readme.md)).
 * **[`pico-nes`](./pico-nes)** : Aide-mémoire des touches, manettes et câblage GPIO/I2S pour la **Nintendo NES** ([voir `pico-nes/readme.md`](./pico-nes/readme.md)).
-* **[`scumm`](./scumm)** : Fichiers sources, firmwares et ressources pour l'émulation **ScummVM** ([voir `scumm/readme.md`](./scumm/readme.md)).
 
 
 ---
@@ -45,11 +45,21 @@ Ce dépôt regroupe mes développements ainsi qu'une sélection de projets compa
 
 ---
 
+
+### 4. Jeux d'aventure Point & Click (`pico-scummvm` / ScummVM)
+Émulation de jeux d'aventure classiques (LucasArts, Sierra, Revolution Software...) avec sortie HDMI, chargement depuis carte SD, menu OSD et support souris/clavier USB.
+* Aide-mémoire local (touches AZERTY/QWERTY, configuration souris & répertoires de jeux) : [`pico-scummvm/readme.md`](./pico-scummvm/readme.md)
+* Dépôt officiel : [PicoPlus-devel/pico-scummvm](https://github.com/adafruit/Adafruit_Arcade_Machines)
+
+![Émulateur ScummVM sur Pico](images/monkey.jpg)
+
+---
+
 ## 🌐 Projets externes compatibles (avec guides locaux)
 
 Ce dépôt inclut également des guides complets d'installation et de câblage pour deux émulateurs majeurs compatibles avec la **Waveshare RP2350-PiZero** :
 
-### 4. ZX Spectrum (`pico-speccy`)
+### 5. ZX Spectrum (`pico-speccy`)
 Émulation complète de la famille Sinclair ZX Spectrum (48K, 128K, +3, Pentagon, Scorpion, ZX Spectrum Next, etc.) avec support HDMI, audio I2S/PCM5122, double port USB (`PIO-USB`) et réseau Wi-Fi.
 * Guide local (installation, raccourcis, NextZXOS & Wi-Fi ESP-01S) : [`pico-speccy/readme.md`](./pico-speccy/readme.md)
 * Dépôt officiel : [drewpo28/pico-speccy](https://github.com/drewpo28/pico-speccy)
@@ -58,22 +68,12 @@ Ce dépôt inclut également des guides complets d'installation et de câblage p
 
 ---
 
-### 5. Nintendo NES (`pico-infonesPlus`)
+### 6. Nintendo NES (`pico-infonesPlus`)
 Émulation Nintendo Entertainment System (NES / Famicom Disk System) avec sortie HDMI, chargement depuis carte SD, menu OSD et support des manettes USB ou originales.
 * Aide-mémoire local (touches AZERTY/QWERTY, manettes NES/SNES & audio I2S) : [`pico-nes/readme.md`](./pico-nes/readme.md)
 * Dépôt officiel : [PicoPlus-devel/pico-infonesPlus](https://github.com/PicoPlus-devel/pico-infonesPlus)
 
 ![Émulateur NES pico-infonesPlus](images/nes.png)
-
----
-
-### 6. Jeux d'aventure Point & Click (`pico-scummvm` / ScummVM)
-Émulation de jeux d'aventure classiques (LucasArts, Sierra, Revolution Software...) avec sortie HDMI, chargement depuis carte SD, menu OSD et support souris/clavier USB.
-* Aide-mémoire local (touches AZERTY/QWERTY, configuration souris & répertoires de jeux) : [`pico-scummvm/readme.md`](./pico-scummvm/readme.md)
-* Dépôt officiel : [PicoPlus-devel/pico-scummvm](https://github.com/adafruit/Adafruit_Arcade_Machines)
-
-![Émulateur ScummVM sur Pico](images/monkey.png)
-
 
 ---
 ## 🛠️ Matériel requis & Modification PSRAM
