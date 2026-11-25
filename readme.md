@@ -12,6 +12,7 @@ Ce dépôt regroupe mes développements ainsi qu'une sélection de projets compa
 * **[`apple2e`](./apple2e)** : Fichiers sources, firmwares et ressources pour l'émulation de l'**Apple IIe**.
 * **[`pico-speccy`](./pico-speccy)** : Guide complet, raccourcis clavier et configuration Wi-Fi ESP-01S pour le **ZX Spectrum** ([voir `pico-speccy/readme.md`](./pico-speccy/readme.md)).
 * **[`pico-nes`](./pico-nes)** : Aide-mémoire des touches, manettes et câblage GPIO/I2S pour la **Nintendo NES** ([voir `pico-nes/readme.md`](./pico-nes/readme.md)).
+* **[`scumm`](./scumm)** : Fichiers sources, firmwares et ressources pour l'émulation **ScummVM** ([voir `scumm/readme.md`](./scumm/readme.md)).
 
 
 ---
@@ -66,6 +67,15 @@ Ce dépôt inclut également des guides complets d'installation et de câblage p
 
 ---
 
+### 6. Jeux d'aventure Point & Click (`pico-scummvm` / ScummVM)
+Émulation de jeux d'aventure classiques (LucasArts, Sierra, Revolution Software...) avec sortie HDMI, chargement depuis carte SD, menu OSD et support souris/clavier USB.
+* Aide-mémoire local (touches AZERTY/QWERTY, configuration souris & répertoires de jeux) : [`pico-scummvm/readme.md`](./pico-scummvm/readme.md)
+* Dépôt officiel : [PicoPlus-devel/pico-scummvm](https://github.com/adafruit/Adafruit_Arcade_Machines)
+
+![Émulateur ScummVM sur Pico](images/monkey.png)
+
+
+---
 ## 🛠️ Matériel requis & Modification PSRAM
 
 * **Carte de développement :** **Waveshare RP2350-PiZero** (voir détails dans [`RP2350_Brief`](./RP2350_Brief)).

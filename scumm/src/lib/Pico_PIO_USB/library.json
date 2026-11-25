@@ -1,0 +1,11 @@
+{
+  "name": "Pico_PIO_USB",
+  "version": "0.7.3",
+  "description": "Pico PIO USB library for RP2040/RP2350 (local trimmed MIT copy)",
+  "license": "MIT",
+  "platforms": "raspberrypi",
+  "frameworks": "arduino",
+  "build": {
+    "srcFilter": ["+<*>", "-<*.pio>"]
+  }
+}

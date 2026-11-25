@@ -1,0 +1,191 @@
+#include "scumm_osd.h"
+#include "audio.h"
+#include <stdio.h>
+#include <string.h>
+
+/* Police 5x7 compacte ASCII 32..95 */
+static const uint8_t s_font5x7[][5] = {
+    {0x00,0x00,0x00,0x00,0x00}, /* ' ' */
+    {0x00,0x00,0x5F,0x00,0x00}, /* '!' */
+    {0x00,0x07,0x00,0x07,0x00}, /* '"' */
+    {0x14,0x7F,0x14,0x7F,0x14}, /* '#' */
+    {0x24,0x2A,0x7F,0x2A,0x12}, /* '$' */
+    {0x23,0x13,0x08,0x64,0x62}, /* '%' */
+    {0x36,0x49,0x55,0x22,0x50}, /* '&' */
+    {0x00,0x05,0x03,0x00,0x00}, /* ''' */
+    {0x00,0x1C,0x22,0x41,0x00}, /* '(' */
+    {0x00,0x41,0x22,0x1C,0x00}, /* ')' */
+    {0x14,0x08,0x3E,0x08,0x14}, /* '*' */
+    {0x08,0x08,0x3E,0x08,0x08}, /* '+' */
+    {0x00,0x50,0x30,0x00,0x00}, /* ',' */
+    {0x08,0x08,0x08,0x08,0x08}, /* '-' */
+    {0x00,0x60,0x60,0x00,0x00}, /* '.' */
+    {0x20,0x10,0x08,0x04,0x02}, /* '/' */
+    {0x3E,0x51,0x49,0x45,0x3E}, /* '0' */
+    {0x00,0x42,0x7F,0x40,0x00}, /* '1' */
+    {0x42,0x61,0x51,0x49,0x46}, /* '2' */
+    {0x21,0x41,0x45,0x4B,0x31}, /* '3' */
+    {0x18,0x14,0x12,0x7F,0x10}, /* '4' */
+    {0x27,0x45,0x45,0x45,0x39}, /* '5' */
+    {0x3C,0x4A,0x49,0x49,0x30}, /* '6' */
+    {0x01,0x71,0x09,0x05,0x03}, /* '7' */
+    {0x36,0x49,0x49,0x49,0x36}, /* '8' */
+    {0x06,0x49,0x49,0x29,0x1E}, /* '9' */
+    {0x00,0x36,0x36,0x00,0x00}, /* ':' */
+    {0x00,0x56,0x36,0x00,0x00}, /* ';' */
+    {0x08,0x14,0x22,0x41,0x00}, /* '<' */
+    {0x14,0x14,0x14,0x14,0x14}, /* '=' */
+    {0x00,0x41,0x22,0x14,0x08}, /* '>' */
+    {0x02,0x01,0x51,0x09,0x06}, /* '?' */
+    {0x32,0x49,0x79,0x41,0x3E}, /* '@' */
+    {0x7E,0x11,0x11,0x11,0x7E}, /* 'A' */
+    {0x7F,0x49,0x49,0x49,0x36}, /* 'B' */
+    {0x3E,0x41,0x41,0x41,0x22}, /* 'C' */
+    {0x7F,0x41,0x41,0x22,0x1C}, /* 'D' */
+    {0x7F,0x49,0x49,0x49,0x41}, /* 'E' */
+    {0x7F,0x09,0x09,0x09,0x01}, /* 'F' */
+    {0x3E,0x41,0x49,0x49,0x7A}, /* 'G' */
+    {0x7F,0x08,0x08,0x08,0x7F}, /* 'H' */
+    {0x00,0x41,0x7F,0x41,0x00}, /* 'I' */
+    {0x20,0x40,0x41,0x3F,0x01}, /* 'J' */
+    {0x7F,0x08,0x14,0x22,0x41}, /* 'K' */
+    {0x7F,0x40,0x40,0x40,0x40}, /* 'L' */
+    {0x7F,0x02,0x0C,0x02,0x7F}, /* 'M' */
+    {0x7F,0x04,0x08,0x10,0x7F}, /* 'N' */
+    {0x3E,0x41,0x41,0x41,0x3E}, /* 'O' */
+    {0x7F,0x09,0x09,0x09,0x06}, /* 'P' */
+    {0x3E,0x41,0x51,0x21,0x5E}, /* 'Q' */
+    {0x7F,0x09,0x19,0x29,0x46}, /* 'R' */
+    {0x46,0x49,0x49,0x49,0x31}, /* 'S' */
+    {0x01,0x01,0x7F,0x01,0x01}, /* 'T' */
+    {0x3F,0x40,0x40,0x40,0x3F}, /* 'U' */
+    {0x1F,0x20,0x40,0x20,0x1F}, /* 'V' */
+    {0x3F,0x40,0x38,0x40,0x3F}, /* 'W' */
+    {0x63,0x14,0x08,0x14,0x63}, /* 'X' */
+    {0x07,0x08,0x70,0x08,0x07}, /* 'Y' */
+    {0x61,0x51,0x49,0x45,0x43}, /* 'Z' */
+    {0x00,0x7F,0x41,0x41,0x00}, /* '[' */
+    {0x02,0x04,0x08,0x10,0x20}, /* '\' */
+    {0x00,0x41,0x41,0x7F,0x00}, /* ']' */
+    {0x04,0x02,0x01,0x02,0x04}, /* '^' */
+    {0x40,0x40,0x40,0x40,0x40}, /* '_' */
+};
+
+static bool s_open = false;
+static int  s_sel  = 0;
+
+static void fill_rect(uint16_t *fb, int x, int y, int w, int h, uint16_t c)
+{
+    for (int yy = y; yy < y + h; yy++) {
+        if (yy < 0 || yy >= 240) continue;
+        for (int xx = x; xx < x + w; xx++) {
+            if (xx < 0 || xx >= 320) continue;
+            fb[yy * 320 + xx] = c;
+        }
+    }
+}
+
+static void draw_char(uint16_t *fb, int x, int y, char ch, uint16_t c)
+{
+    if (ch >= 'a' && ch <= 'z') ch = (char)(ch - 'a' + 'A');
+    if (ch < 32 || ch > 95) ch = '?';
+    const uint8_t *col = s_font5x7[ch - 32];
+    for (int i = 0; i < 5; i++) {
+        uint8_t bits = col[i];
+        for (int r = 0; r < 7; r++) {
+            if (bits & (1u << r)) {
+                int xx = x + i, yy = y + r;
+                if (xx >= 0 && xx < 320 && yy >= 0 && yy < 240) {
+                    fb[yy * 320 + xx] = c;
+                }
+            }
+        }
+    }
+}
+
+static void draw_str(uint16_t *fb, int x, int y, const char *s, uint16_t c)
+{
+    while (*s) {
+        draw_char(fb, x, y, *s++, c);
+        x += 6;
+    }
+}
+
+bool scumm_osd_is_open(void) { return s_open; }
+void scumm_osd_open(void)    { s_open = true; s_sel = 0; }
+void scumm_osd_close(void)   { s_open = false; }
+
+void scumm_osd_key(uint8_t key, scumm_system *sys)
+{
+    if (!s_open) return;
+    if (key == 0x0B) { /* Up */
+        s_sel = (s_sel + 3) % 4;
+    } else if (key == 0x0A) { /* Down */
+        s_sel = (s_sel + 1) % 4;
+    } else if (key == 0x1B) { /* Esc */
+        s_open = false;
+    } else if (key == 0x0D || key == 0x15 || key == 0x08) { /* Enter / Right / Left */
+        int dir = (key == 0x08) ? -1 : 1;
+        if (s_sel == 0) {
+            uint8_t m = (uint8_t)((audioGetOutputMode() + (dir > 0 ? 1 : 2)) % 3);
+            audioSetOutputMode((AudioOutputMode)m);
+        } else if (s_sel == 1) {
+            uint8_t v = audioGetVolume();
+            int nv = (int)v + dir * 25;
+            if (nv < 25) nv = 100;
+            if (nv > 100) nv = 25;
+            audioSetVolume((uint8_t)nv);
+        } else if (s_sel == 2 && sys) {
+            sys->pointer_speed = (uint8_t)((sys->pointer_speed + (dir > 0 ? 1 : 2)) % 3);
+        } else if (s_sel == 3 && key == 0x0D) {
+            s_open = false;
+        }
+    }
+}
+
+void scumm_osd_render(uint16_t *fb)
+{
+    if (!s_open || !fb) return;
+
+    const int wx = 36, wy = 44, ww = 248, wh = 136;
+    fill_rect(fb, wx, wy, ww, wh, 0x10A6u);
+    fill_rect(fb, wx, wy, ww, 18, 0x2192u);
+    fill_rect(fb, wx, wy, ww, 2, 0xFFE0u);
+    fill_rect(fb, wx, wy + wh - 2, ww, 2, 0xFFE0u);
+    fill_rect(fb, wx, wy, 2, wh, 0xFFE0u);
+    fill_rect(fb, wx + ww - 2, wy, 2, wh, 0xFFE0u);
+
+    draw_str(fb, wx + 44, wy + 6, "SCUMM RP2350 CONFIG", 0xFFFFu);
+
+    const char *aud_names[3] = { "HDMI", "I2S DAC", "PWM" };
+    uint8_t am = audioGetOutputMode();
+    if (am > 2) am = 0;
+
+    char l0[40], l1[40], l2[40];
+    snprintf(l0, sizeof(l0), "AUDIO   : %s", aud_names[am]);
+    snprintf(l1, sizeof(l1), "VOLUME  : %u%%", (unsigned)audioGetVolume());
+    snprintf(l2, sizeof(l2), "POINTEUR: VITESSE %u", 1u);
+
+    const char *items[4] = { l0, l1, l2, "REPRENDRE LE JEU" };
+    for (int i = 0; i < 4; i++) {
+        int iy = wy + 30 + i * 20;
+        if (i == s_sel) {
+            fill_rect(fb, wx + 10, iy - 3, ww - 20, 14, 0xFFE0u);
+            draw_str(fb, wx + 16, iy, items[i], 0x0000u);
+        } else {
+            draw_str(fb, wx + 16, iy, items[i], 0xFFFFu);
+        }
+    }
+
+    draw_str(fb, wx + 12, wy + wh - 16, "HAUT/BAS  ENTREE=MODIF  F4=FERMER", 0x07FFu);
+}
+
+void scumm_osd_error_screen(uint16_t *fb, uint16_t bg565, const char *title, const char *line1, const char *line2)
+{
+    if (!fb) return;
+    fill_rect(fb, 0, 0, 320, 240, bg565);
+    fill_rect(fb, 20, 70, 280, 100, 0x0000u);
+    draw_str(fb, 32, 84, title ? title : "ERREUR", 0xFFE0u);
+    draw_str(fb, 32, 108, line1 ? line1 : "", 0xFFFFu);
+    draw_str(fb, 32, 128, line2 ? line2 : "", 0x07FFu);
+}
