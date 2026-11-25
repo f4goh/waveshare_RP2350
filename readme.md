@@ -6,12 +6,13 @@ Ce dépôt regroupe mes développements ainsi qu'une sélection de projets compa
 
 ## 📂 Structure du dépôt
 
-| Dossier | Description |
-| :--- | :--- |
-| **[`RP2350_Brief`](./RP2350_Brief)** | Documentation, schémas de câblage et présentation technique de la carte Waveshare RP2350. |
-| **[`oric-atmos`](./oric-atmos)** | Fichiers sources, firmwares et ressources pour l'émulation de l'**Oric Atmos**. |
-| **[`commodore64`](./commodore64)** | Fichiers sources, firmwares et ressources pour l'émulation du **Commodore 64**. |
-| **[`apple2e`](./apple2e)** | Fichiers sources, firmwares et ressources pour l'émulation de l'**Apple IIe**. |
+* **[`RP2350_Brief`](./RP2350_Brief)** : Documentation, schémas de câblage et présentation technique de la carte Waveshare RP2350.
+* **[`oric-atmos`](./oric-atmos)** : Fichiers sources, firmwares et ressources pour l'émulation de l'**Oric Atmos**.
+* **[`commodore64`](./commodore64)** : Fichiers sources, firmwares et ressources pour l'émulation du **Commodore 64**.
+* **[`apple2e`](./apple2e)** : Fichiers sources, firmwares et ressources pour l'émulation de l'**Apple IIe**.
+* **[`pico-speccy`](./pico-speccy)** : Guide complet, raccourcis clavier et configuration Wi-Fi ESP-01S pour le **ZX Spectrum** ([voir `pico-speccy/readme.md`](./pico-speccy/readme.md)).
+* **[`pico-nes`](./pico-nes)** : Aide-mémoire des touches, manettes et câblage GPIO/I2S pour la **Nintendo NES** ([voir `pico-nes/readme.md`](./pico-nes/readme.md)).
+
 
 ---
 
@@ -26,7 +27,7 @@ Ce dépôt regroupe mes développements ainsi qu'une sélection de projets compa
 ---
 
 ### 2. Commodore 64
-Émulation du célèbre micro-ordinateur 8 bits de Commodore sur plateforme RP2350.
+Émulation du micro-ordinateur 8 bits de Commodore sur plateforme RP2350.
 * Accéder au dossier : [`/commodore64`](./commodore64)
 * Code adapté à partir de : [rh1tech/frank-c64](https://github.com/rh1tech/frank-c64)
 
@@ -35,7 +36,7 @@ Ce dépôt regroupe mes développements ainsi qu'une sélection de projets compa
 ---
 
 ### 3. Apple IIe
-Émulation du micro-ordinateur 8 bits Apple IIe (processeur 65C02) avec gestion des modes vidéo et images disques (`.dsk`, `.nib`, `.woz`).
+Émulation de l'Apple IIe (processeur 65C02) avec gestion des modes vidéo et images disques (`.dsk`, `.nib`, `.woz`).
 * Accéder au dossier : [`/apple2e`](./apple2e)
 * Code adapté à partir de : [rh1tech/frank-apple](https://github.com/rh1tech/frank-apple)
 
@@ -43,20 +44,22 @@ Ce dépôt regroupe mes développements ainsi qu'une sélection de projets compa
 
 ---
 
-## 🌐 Projets externes compatibles avec cette carte
+## 🌐 Projets externes compatibles (avec guides locaux)
 
-Ce dépôt recense également d'autres émulateurs majeurs compatibles avec la carte **Waveshare RP2350-PiZero** :
+Ce dépôt inclut également des guides complets d'installation et de câblage pour deux émulateurs majeurs compatibles avec la **Waveshare RP2350-PiZero** :
 
 ### 4. ZX Spectrum (`pico-speccy`)
-Émulateur complet des ordinateurs compatibles Sinclair ZX Spectrum (48K, 128K, +3, Pentagon, Scorpion, ZX Spectrum Next, etc.) avec support HDMI, audio I2S/PCM5122 et double port USB (PIO-USB).
-* Dépôt officiel : [drewpo28/pico-speccy](https://github.com/drewpo28/pico-speccy/blob/main/README.md)
+Émulation complète de la famille Sinclair ZX Spectrum (48K, 128K, +3, Pentagon, Scorpion, ZX Spectrum Next, etc.) avec support HDMI, audio I2S/PCM5122, double port USB (`PIO-USB`) et réseau Wi-Fi.
+* Guide local (installation, raccourcis, NextZXOS & Wi-Fi ESP-01S) : [`pico-speccy/readme.md`](./pico-speccy/readme.md)
+* Dépôt officiel : [drewpo28/pico-speccy](https://github.com/drewpo28/pico-speccy)
 
 ![Émulateur ZX Spectrum pico-speccy](images/zx.jpg)
 
 ---
 
 ### 5. Nintendo NES (`pico-infonesPlus`)
-Émulateur Nintendo Entertainment System (NES / Famicom Disk System) avec sortie HDMI, chargement depuis carte SD, menu OSD et support des manettes USB.
+Émulation Nintendo Entertainment System (NES / Famicom Disk System) avec sortie HDMI, chargement depuis carte SD, menu OSD et support des manettes USB ou originales.
+* Aide-mémoire local (touches AZERTY/QWERTY, manettes NES/SNES & audio I2S) : [`pico-nes/readme.md`](./pico-nes/readme.md)
 * Dépôt officiel : [PicoPlus-devel/pico-infonesPlus](https://github.com/PicoPlus-devel/pico-infonesPlus)
 
 ![Émulateur NES pico-infonesPlus](images/nes.png)
@@ -65,22 +68,21 @@ Ce dépôt recense également d'autres émulateurs majeurs compatibles avec la c
 
 ## 🛠️ Matériel requis & Modification PSRAM
 
-* Carte de développement **Waveshare RP2350-PiZero** (voir détails dans [`RP2350_Brief`](./RP2350_Brief))
-  * *Note vidéo & audio :* Sur cette carte, le connecteur mini-HDMI n'est pas câblé sur les broches HSTX mais sur des GPIO standards pilotés en **PIO** (compatibilité broche à broche avec la RP2040-PiZero). Selon les firmwares, l'audio est restitué via HDMI (selon le pilote utilisé) ou sur le connecteur 40 pins (PWM ou DAC I2S externe type **PCM5122**).
-* **Ajout mémoire PSRAM (fortement recommandé) :**
-  * La carte dispose d'un emplacement libre au dos (boîtier **SOP-8**) permettant de souder une puce **PSRAM APS6404L-3S** (capacité de **64 Mbit, soit 8 Mo**).
-  * Cette extension de **8 Mo** est indispensable pour faire tourner les projets les plus gourmands (*frank-c64*, *frank-apple* en mode complet, *pico-speccy* pour le ZX Spectrum Next / TS-Conf) et permet sous *pico-infonesPlus* de charger instantanément les ROMs en RAM sans avoir à les flasher.
-  * *Note : Sur certaines cartes équipées d'une mémoire Flash non-Winbond (ex. Puya), un correctif logiciel unique (`FLASH_QE_SET_1.uf2`) peut être nécessaire pour activer le bit Quad Enable (QE) avant d'utiliser la PSRAM en overclocking.*
-* Clavier ou manette USB (connecté sur le port **PIO-USB** de la carte)
-* Carte microSD (formatée en FAT32 ou exFAT) pour le stockage des ROMs et images disques (`.d64`, `.tap`, `.tzx`, `.dsk`, `.woz`, `.nes`, etc.)
+* **Carte de développement :** **Waveshare RP2350-PiZero** (voir détails dans [`RP2350_Brief`](./RP2350_Brief)).
+  * *Note vidéo & audio :* Sur cette carte, le port mini-HDMI n'est pas routé sur les broches HSTX mais sur des GPIO standards pilotés en **PIO** (compatibilité broche à broche avec la RP2040-PiZero). L'audio passe par un DAC I2S externe (type **PCM5122** / **PCM5102A**) ou par sortie PWM sur le connecteur 40 broches selon le firmware.
+* **Extension mémoire PSRAM (fortement recommandée) :**
+  * Un emplacement libre au dos de la carte (boîtier **SOP-8**) permet de souder une puce **PSRAM APS6404L-3S** de **8 Mo (64 Mbit)**.
+  * Indispensable pour *frank-c64*, *frank-apple* en mode complet et *pico-speccy* (ZX Spectrum Next, TS-Conf), et permet sous *pico-infonesPlus* un chargement instantané en RAM.
+  * *Note Flash :* Sur les cartes dotées d'une mémoire Flash non-Winbond (ex. Puya), un flashage unique de `FLASH_QE_SET_1.uf2` active le bit Quad Enable (QE) nécessaire au fonctionnement stable de la PSRAM en overclocking.
+* **Périphériques :** Clavier ou manette USB connecté sur le port **PIO-USB** (`J2`), et carte microSD formatée en **FAT32** pour les ROMs et images disques.
 
 ---
 
 ## 🚀 Installation rapide (Flashage `.uf2`)
-1. Téléchargez le fichier firmware `.uf2` correspondant à la carte **Waveshare RP2350-PiZero** depuis le dossier concerné ou la page *Releases* du projet.
-2. Maintenez le bouton **BOOT** de la carte enfoncé tout en la raccordant à votre ordinateur via le port **USB** (et non PIO-USB).
-3. Relâchez le bouton une fois que le lecteur amovible `RP2350` apparaît.
-4. Glissez-déposez le fichier `.uf2` sur ce lecteur ; la carte redémarre automatiquement sur l'émulateur.
+1. Téléchargez le fichier `.uf2` adapté à la **Waveshare RP2350-PiZero** depuis le dossier du projet ou sa page *Releases*.
+2. Maintenez le bouton **BOOT** enfoncé tout en reliant la carte au PC via le port **USB** principal (et non `PIO-USB`).
+3. Relâchez le bouton dès l'apparition du lecteur amovible `RP2350`.
+4. Copiez le fichier `.uf2` sur ce lecteur ; la carte redémarre aussitôt sur l'émulateur.
 
 ---
 
