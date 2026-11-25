@@ -1,0 +1,12 @@
+{
+    "name": "TinyUSB_DualHost",
+    "version": "1.0.0",
+    "description": "Dual-port TinyUSB Host (RP2350 Native + Pico-PIO-USB)",
+    "frameworks": "arduino",
+    "platforms": "raspberrypi",
+    "build": {
+        "flags": [
+            "-Isrc"
+        ]
+    }
+}
