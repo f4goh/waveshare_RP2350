@@ -76,6 +76,19 @@ Ce dépôt inclut également des guides complets d'installation et de câblage p
 ![Émulateur NES pico-infonesPlus](images/nes.png)
 
 ---
+
+### 7. Game boy color (`pico-peanutGB`)
+PicoPeanutGB est un émulateur Game Boy (DMG) et Game Boy Color pour les cartes à microcontrôleur basées sur le RP2350, avec l'image et le son via HDMI et les jeux chargés depuis une carte SD.
+* Dépôt officiel : [PicoPlus-devel/pico-peanutGB/](https://github.com/PicoPlus-devel/pico-peanutGB/releases) PicoPeanutGB_WaveShareRP2350PiZero_arm_piousb.uf2
+
+---
+
+### 8. pico-bootLoader (`pico-bootLoader`)
+pico-bootLoader est un chargeur d'amorçage (bootloader) pour les cartes RP2350. Son objectif principal est d'héberger une collection d'émulateurs de jeux rétro, de jeux d'arcade ainsi que des portages natifs de Doom, Duke Nukem 3D, Quake II et Diablo sur une seule carte, et de permettre à l'utilisateur de choisir celui qu'il souhaite lancer depuis un menu à l'écran, sans avoir à reconnecter la carte à un ordinateur.
+* Dépôt officiel : [PicoPlus-devel/pico-peanutGB/](https://github.com/PicoPlus-devel/pico-bootLoader/releases) pico-bootLoader_WaveShareRP2350PiZero_arm_piousb.uf2
+(le clavier ne semble pas fonctionner)
+
+---
 ## 🛠️ Matériel requis & Modification PSRAM
 
 * **Carte de développement :** **Waveshare RP2350-PiZero** (voir détails dans [`RP2350_Brief`](./RP2350_Brief)).
@@ -86,6 +99,8 @@ Ce dépôt inclut également des guides complets d'installation et de câblage p
   * *Note Flash :* Sur les cartes dotées d'une mémoire Flash non-Winbond (ex. Puya), un flashage unique de `FLASH_QE_SET_1.uf2` active le bit Quad Enable (QE) nécessaire au fonctionnement stable de la PSRAM en overclocking.
 * **Périphériques :** Clavier ou manette USB connecté sur le port **PIO-USB** (`J2`), et carte microSD formatée en **FAT32** pour les ROMs et images disques.
 
+[Voir le câblage GPIO](gpio.md)
+
 ---
 
 ## 🚀 Installation rapide (Flashage `.uf2`)
@@ -95,5 +110,7 @@ Ce dépôt inclut également des guides complets d'installation et de câblage p
 4. Copiez le fichier `.uf2` sur ce lecteur ; la carte redémarre aussitôt sur l'émulateur.
 
 ---
+
+
 
 
